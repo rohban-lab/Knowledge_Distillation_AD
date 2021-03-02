@@ -1,27 +1,28 @@
 # data parameters
 experiment_name: 'local_equal_net'
-dataset_name: retina # cifar10-mnist-mvtec-fashionmnist-retina
+dataset_name: cifar10 # [mnist, fashionmnist, cifar10, mvtec, retina]
+
+
 # training parameters
-num_epochs: 201 # mvtec-Ad:601 Cifar10:201 MNIST:51
+num_epochs: 201 # mvtec:601, cifar10:201, mnist/fashionmnist:51
 batch_size: 64
 learning_rate: 1e-3
+lamda: 0.01 # mvtec:0.5, Others:0.01
 
-normal_class: 3  #'capsule' # mvtec: 'capsule' for retina:3
-
-
-lamda: 0.01 #mvtec-Ad:0.5 Others:0.01
+normal_class: 3 # mvtec:'capsule', mnist:3
 
 mvtec_img_size: 128
 
-pretrain: True
-use_bias: False
-equal_network_size: False
+pretrain: True # True:use pre-trained vgg as source network --- False:use random initialize
+use_bias: False # True:using bias term in neural network layer
+equal_network_size: False # True:using equal network size for cloner and source network --- False:smaller network for cloner
 direction_loss_only: False
 
+
 # Test
-localization_test: False # False: For Detection --- True: For Localization Test
+localization_test: False # True:For Localization Test --- False:For Detection
 localization_method: 'gbp' # gradients , smooth_grad , gbp
-last_checkpoint: 10
+last_checkpoint: 201
 
 
 

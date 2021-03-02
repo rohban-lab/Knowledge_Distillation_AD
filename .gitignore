@@ -1,3 +1,4 @@
+# ---> Python
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -8,6 +9,11 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.idea/
+venv/
+train/
+test/
+temp_data/
 build/
 develop-eggs/
 dist/

@@ -78,7 +78,7 @@ class Vgg16(torch.nn.Module):
                     print("Initialized", ind, f)
                 else:
                     print("Bypassed", ind, f)
-            # print("Pretrained Network loaded")
+            # print("Pre-trained Network loaded")
         self.features = nn.ModuleList(features).eval()
         self.output = []
 
@@ -98,17 +98,18 @@ def get_networks(config, load_checkpoint=False):
     dataset_name = config['dataset_name']
     normal_class = config['normal_class']
     use_bias = config['use_bias']
+    cfg = {
+        'A': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 'M', 512, 512, 512, 'M', 512, 512, 512, 'M'],
+        'B': [16, 16, 'M', 16, 128, 'M', 16, 16, 256, 'M', 16, 16, 512, 'M', 16, 16, 512, 'M'],
+    }
+
     if equal_network_size:
-        cfg = {
-            'A': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 'M', 512, 512, 512, 'M', 512, 512, 512, 'M'],
-        }
+        config_type = 'A'
     else:
-        cfg = {
-            'A': [16, 16, 'M', 16, 128, 'M', 16, 16, 256, 'M', 16, 16, 512, 'M', 16, 16, 512, 'M'],
-        }
+        config_type = 'B'
 
     vgg = Vgg16(pretrain).cuda()
-    model = make_arch('A', cfg, use_bias, True).cuda()
+    model = make_arch(config_type, cfg, use_bias, True).cuda()
 
     for j, item in enumerate(nn.ModuleList(model.features)):
         print('layer : {} {}'.format(j, item))
@@ -120,13 +121,12 @@ def get_networks(config, load_checkpoint=False):
             torch.load('{}Cloner_{}_epoch_{}.pth'.format(checkpoint_path, normal_class, last_checkpoint)))
         if not pretrain:
             vgg.load_state_dict(
-                torch.load('{}Teacher_{}_random_vgg.pth'.format(checkpoint_path, normal_class)))
+                torch.load('{}Source_{}_random_vgg.pth'.format(checkpoint_path, normal_class)))
     elif not pretrain:
         checkpoint_path = "./outputs/{}/{}/checkpoints/".format(experiment_name, dataset_name)
         Path(checkpoint_path).mkdir(parents=True, exist_ok=True)
 
-        torch.save(vgg.state_dict(),
-                   '{}Teacher_{}_random_vgg.pth'.format(checkpoint_path, normal_class))
-        print("Teacher Checkpoint saved!")
+        torch.save(vgg.state_dict(), '{}Source_{}_random_vgg.pth'.format(checkpoint_path, normal_class))
+        print("Source Checkpoint saved!")
 
     return vgg, model

@@ -1,5 +1,4 @@
 from argparse import ArgumentParser
-
 from torch import nn
 from random import randrange
 from models.network import get_networks

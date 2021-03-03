@@ -3,7 +3,6 @@ import numpy as np
 import cv2
 
 
-# get configs
 def get_config(config):
     with open(config, 'r') as stream:
         return yaml.load(stream)
@@ -18,6 +17,7 @@ def convert_to_grayscale(im_as_arr):
     return grayscale_im
 
 
+# opening morphological process for localization
 def morphological_process(x):
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
     kernel = kernel.astype(np.uint8)

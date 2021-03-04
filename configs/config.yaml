@@ -1,9 +1,10 @@
 # data parameters
 experiment_name: 'local_equal_net'
 dataset_name: cifar10 # [mnist, fashionmnist, cifar10, mvtec, retina]
+last_checkpoint: 201
 
 
-# training parameters
+# Training parameters
 num_epochs: 201 # mvtec:601, cifar10:201, mnist/fashionmnist:51
 batch_size: 64
 learning_rate: 1e-3
@@ -17,12 +18,12 @@ pretrain: True # True:use pre-trained vgg as source network --- False:use random
 use_bias: False # True:using bias term in neural network layer
 equal_network_size: False # True:using equal network size for cloner and source network --- False:smaller network for cloner
 direction_loss_only: False
+continue_train: False
 
 
-# Test
+# Test parameters
 localization_test: False # True:For Localization Test --- False:For Detection
 localization_method: 'gbp' # gradients , smooth_grad , gbp
-last_checkpoint: 201
 
 
 

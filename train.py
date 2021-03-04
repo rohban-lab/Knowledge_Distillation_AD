@@ -15,15 +15,14 @@ parser = ArgumentParser()
 parser.add_argument('--config', type=str, default='configs/config.yaml', help="training configuration")
 
 
-# TODO: continue train from specified checkpoint
-
-
 def train(config):
     direction_loss_only = config["direction_loss_only"]
     normal_class = config["normal_class"]
     learning_rate = float(config['learning_rate'])
     num_epochs = config["num_epochs"]
     lamda = config['lamda']
+    continue_train = config['continue_train']
+    last_checkpoint = config['last_checkpoint']
 
     checkpoint_path = "./outputs/{}/{}/checkpoints/".format(config['experiment_name'], config['dataset_name'])
 
@@ -31,7 +30,10 @@ def train(config):
     Path(checkpoint_path).mkdir(parents=True, exist_ok=True)
 
     train_dataloader, test_dataloader = load_data(config)
-    vgg, model = get_networks(config)
+    if continue_train:
+        vgg, model = get_networks(config, load_checkpoint=True)
+    else:
+        vgg, model = get_networks(config)
 
     # Criteria And Optimizers
     if direction_loss_only:
@@ -40,9 +42,16 @@ def train(config):
         criterion = MseDirectionLoss(lamda)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+    if continue_train:
+        optimizer.load_state_dict(
+            torch.load('{}Opt_{}_epoch_{}.pth'.format(checkpoint_path, normal_class, last_checkpoint)))
 
     losses = []
     roc_aucs = []
+    if continue_train:
+        with open('{}Auc_{}_epoch_{}.pickle'.format(checkpoint_path, normal_class, last_checkpoint), 'rb') as f:
+            roc_aucs = pickle.load(f)
+
     for epoch in range(num_epochs + 1):
         model.train()
         epoch_loss = 0

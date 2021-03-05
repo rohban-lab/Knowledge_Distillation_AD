@@ -191,7 +191,6 @@ def generate_smooth_grad(data, param_n, param_sigma_multiplier, vbp, single_chan
 
 
 class IntegratedGradients():
-
     def __init__(self, model, vgg, device):
         self.model = model
         self.vgg = vgg
@@ -239,7 +238,6 @@ def generate_integrad_saliency_maps(model, vgg, preprocessed_image, device, step
 
 
 class GuidedBackprop():
-
     def __init__(self, model, vgg, device):
         self.model = model
         self.vgg = vgg

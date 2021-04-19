@@ -29,6 +29,7 @@ Furthermore, Anomaly Localization have been performed on MVTecAD dataset.
 
 MNIST, Fashion-MNIST and CIFAR-10 datasets will be downloaded by Torchvision. You have to download [MVTecAD](https://www.mvtec.com/company/research/datasets/mvtec-ad/), [Retina](https://www.kaggle.com/paultimothymooney/kermany2018), [Head CT Hemorrhage](http://www.kaggle.com/felipekitamura/head-ct-hemorrhage), and [Brain MRI Images for Brain Tumor Detection](http://www.kaggle.com/navoneel/brain-mri-images-for-brain-tumor-detection), and unpack them into the `Dataset` folder.
 
+##### For Localization test you should remove the `good` folder in `{mvtec_class_name}/test/` folder.
 
 ### 3- Train the Model:
 Start the training using the following command. The checkpoints will be saved in the folder `outputs/{experiment_name}/{dataset_name}/checkpoints`.

@@ -107,7 +107,7 @@ def load_data(config):
     test_dataloader = torch.utils.data.DataLoader(
         test_set,
         batch_size=batch_size,
-        shuffle=True,
+        shuffle=False,
     )
 
     return train_dataloader, test_dataloader
@@ -127,7 +127,7 @@ def load_localization_data(config):
     test_dataloader = torch.utils.data.DataLoader(
         test_set,
         batch_size=512,
-        shuffle=True,
+        shuffle=False,
     )
 
     ground_data_path = 'Dataset/MVTec/' + normal_class + '/ground_truth'

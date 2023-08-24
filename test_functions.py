@@ -56,11 +56,15 @@ def detection_test(model, vgg, test_dataloader, config):
 
     labels, scores = zip(*label_score)
     labels = np.array(labels)
+    
     indx1 = labels == target_class
     indx2 = labels != target_class
+    
     labels[indx1] = 1
     labels[indx2] = 0
     scores = np.array(scores)
+    print('labels:', labels)
+    print('scores:', scores)
     fpr, tpr, thresholds = roc_curve(labels, scores, pos_label=0)
     roc_auc = auc(fpr, tpr)
     roc_auc = round(roc_auc, 4)

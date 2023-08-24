@@ -95,6 +95,19 @@ def load_data(config):
         test_data_path = 'Dataset/OCT2017/test'
         test_set = ImageFolder(root=test_data_path, transform=orig_transform)
 
+    elif config['dataset_name'] in ['species']:
+        data_path = '/home/data/Species/Species-60_MC/front/train'
+
+        orig_transform = transforms.Compose([
+            transforms.Resize([224, 224]),
+            transforms.ToTensor()
+        ])
+
+        dataset = ImageFolder(root=data_path, transform=orig_transform)
+
+        test_data_path = '/home/data/Species/Species-60_MC/front/test'
+        test_set = ImageFolder(root=test_data_path, transform=orig_transform)           
+
     else:
         raise Exception(
             "You enter {} as dataset, which is not a valid dataset for this repository!".format(config['dataset_name']))

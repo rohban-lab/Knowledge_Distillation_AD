@@ -44,3 +44,7 @@ Test parameters can also be specified in `configs/config.yaml`.
 ``` bash
 python test.py --config configs/config.yaml
 ```
+
+### ✨ For the transformer-based implementation of KDAD, please check out [GeneralAD/kdad_vit](https://github.com/LucStrater/GeneralAD/blob/master/src/kdad_vit.py). 
+
+
